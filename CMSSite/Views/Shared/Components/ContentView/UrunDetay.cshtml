@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contents = ViewBag.contents as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+    var Specs = ViewBag.Specs as List<Spec>;
+    List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" }) 
+<!-- SECTION CONTENT START -->
+<div class="section-full p-tb80 inner-page-padding stick_in_parent">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-7  sticky_column">
+                <div class="project-detail-containt">
+                    <div class="bg-white text-black">
+                        <h3>@Html.Raw(content.Description)</h3>
+                        @Html.Raw(content.ContentData)
+                        <div class="product-block">
+                            <ul>
+                                @foreach (var specItem in content.SpecContentValue.Where(x => x.ContentPageId == content.Id && specList.Contains(x.SpecId)).ToList())
+                                {
+                                    <li>
+                                        <h4 class="m-b10">@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</h4>
+                                        <p>@specItem.ContentValue</p>
+                                    </li>
+                                }
+                            </ul>
+                        </div>  
+                        <div class="m-b0">
+                            <div class="sx-divider divider-1px  bg-black"><i class="icon-dot c-square"></i></div>
+                        </div>
+                        <ul class="social-icons social-square social-darkest m-b0">
+                            <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                            <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                            <li><a href="javascript:void(0);" class="fa fa-linkedin"></a></li>
+                            <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
+                            <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
+                            <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-lg-5 col-md-5 ">
+
+                <div class="project-detail-outer">
+                    @foreach (var item in content.Gallery)
+                    {
+
+                        <div class="project-detail-pic m-b30">
+                            <div class="sx-media">
+                                <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- SECTION CONTENT END  -->

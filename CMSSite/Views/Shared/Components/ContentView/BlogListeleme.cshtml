@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+<!-- SECTION CONTENT START -->
+<div class="section-full p-tb80 bg-white inner-page-padding">
+
+    <!-- GALLERY CONTENT START -->
+    <div class="container">
+        <div class="masonry-outer mfp-gallery news-grid clearfix row ">
+            @foreach (var item in contentPages)
+            {
+                <!-- COLUMNS 1 -->
+                <div class="masonry-item  col-lg-4 col-md-6 col-sm-12">
+                    <div class="blog-post blog-grid date-style-2">
+
+                        <div class="sx-post-media sx-img-effect img-reflection">
+                            <a href="javascript:void(0);"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")"></a>
+                        </div>
+
+                        <div class="sx-post-info p-t30">
+                      
+                            <div class="sx-post-title ">
+                                <h4 class="post-title"><a href="/@item.Link">@Html.Raw(item.ContentShort)</a></h4>
+                            </div>
+
+                            <div class="sx-post-readmore">
+                                <a href="/@item.Link" title="Detaylı bilgi almak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

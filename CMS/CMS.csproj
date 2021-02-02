@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.3" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2020.3.915" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Templates\**" />
+    <Content Remove="Templates\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <None Remove="Templates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.svg" />
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-brands-400.woff2" />
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-regular-400.svg" />
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-regular-400.woff2" />
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-solid-900.svg" />
+    <None Include="wwwroot\content\css\fonts\%40fortawesome\fa-solid-900.woff2" />
+    <None Include="wwwroot\content\css\fonts\flaticon2\Flaticon2.svg" />
+    <None Include="wwwroot\content\css\fonts\flaticon2\Flaticon2.woff2" />
+    <None Include="wwwroot\content\css\fonts\flaticon\Flaticon.svg" />
+    <None Include="wwwroot\content\css\fonts\line-awesome\line-awesome.svg" />
+    <None Include="wwwroot\content\css\fonts\line-awesome\line-awesome.woff2" />
+    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0A3R1Gd8.woff2" />
+    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0AnR1Gd8.woff2" />
+    <None Include="wwwroot\content\css\fonts\N0bU2SZBIuF2PU_0DXR1.woff2" />
+    <None Include="wwwroot\content\css\fonts\socicon\socicon.svg" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z11lFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z11lFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z1JlFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLDz8Z1xlFQ.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z11lFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z11lFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJbecmNE.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJfecg.woff2" />
+    <None Include="wwwroot\content\css\gfonts\pxiEyp8kv8JHgFVrJJnecmNE.woff2" />
+  </ItemGroup>
+
+
+ 
+
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicSiteService\DynamicSiteService.csproj" />
+    <ProjectReference Include="..\GenericRepoPattern\GenericRepoPattern.csproj" />
+    <ProjectReference Include="..\Helpers\Helpers.csproj" />
+  </ItemGroup>
+
+
+
+</Project>

@@ -1,0 +1,157 @@
+/* default color: #469159 */
+.bg-color,section.bg-color,
+section.call-to-action,
+#mainmenu li li a:hover,
+.price-row,
+.blog-list .date,
+.blog-read .date,
+.slider-info .text1,
+#filters a.selected,
+.btn-primary,
+.bg-id-color,
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus,
+.dropcap,
+.fullwidthbanner-container a.btn,
+.feature-box-big-icon i,
+#testimonial-full,
+.icon-deco i,
+.blog-list .date-box .day,
+.blog-read .date-box .day,
+.bloglist .date-box .day,
+.feature-box-small-icon .border,
+.small-border,
+#jpreBar,
+.date-post,
+.team-list .small-border,
+.de-team-list .small-border,
+.btn-line:hover,a.btn-line:hover,
+.btn-line.hover,a.btn-line.hover,
+.owl-arrow span,
+.de-progress .progress-bar,
+#btn-close-x:hover,
+.box-fx .info,
+.de_tab.tab_steps .de_nav li span,
+.de_testi blockquote:before,
+#services-list li.active,
+#services-list li a:hover,
+.btn-more,
+.widget .small-border,
+.product img:hover,
+#btn-search,
+.de_tab.timeline li.active .dot,
+.custom-show:after,.custom-close:after,
+#back-to-top,
+a.btn-custom,
+.owl-custom-nav .btn-next:before,
+.owl-custom-nav .btn-prev:before,
+#mainmenu ul li:hover > a,
+.pricing-s1 .ribbon,
+a.btn-slider.btn-color,
+.owl-theme .owl-controls .owl-buttons div
+{
+	background-color:#469159;
+}
+
+.feature-box i,
+#mainmenu li:hover > ul,
+.date-box .day,
+.slider_text h1,
+.id-color,
+.pricing-box li h1,
+.title span,
+i.large:hover,
+.feature-box-small-icon-2 i,
+address span i,
+.pricing-dark .pricing-box li.price-row,
+.price,
+#mainmenu a:hover,
+#mainmenu a.active,
+header.smaller #mainmenu a.active,
+.pricing-dark .pricing-box li.price-row,
+.dark .feature-box-small-icon i,
+a.btn-slider:after,
+.feature-box-small-icon i,
+a.btn-line:after,
+.team-list .social a,
+.de_contact_info i,
+.de_count,
+.dark .btn-line:hover:after, .dark a.btn-line:hover:after, .dark a.btn-line.hover:after,
+a.btn-text:after,
+.separator span  i,
+address span strong,
+.de_tab.tab_steps .de_nav li span:hover,
+.de_testi_by,
+.pf_text,
+.widget_tags li a,
+.dark .btn-line:after, .dark  a.btn-line:after,
+.crumb a,
+.btn-right:after,
+.btn-left:before,
+#mainmenu li a:after,
+.de_form input[type="radio"]:checked + label:before,
+.de_form input[type="checkbox"]:checked + label:before,
+#mainmenu li:hover > a,
+.expand h4:after
+{
+	color:#469159;
+}
+
+.feature-box i,
+#filters a:hover,
+#filters a.selected,
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus
+.feature-box-big-icon i:after,
+.social-icons i,
+.btn-line:hover,a.btn-line:hover,
+.btn-line.hover,a.btn-line.hover,
+.product img:hover,
+#contact_form input[type=text]:focus,#contact_form textarea:focus, #search:focus,
+#contact_form .de_light input[type=text]:focus, #contact_form .de_lighttextarea:focus, #contact_form .de_light #search:focus,
+.form-transparent input[type=text]:focus, .form-transparent textarea:focus, .form-transparent input[type=email]:focus
+{
+
+	border-color:#469159;
+}
+
+.box-fx .inner,
+.dark .box-fx .inner,
+.blog-list img,
+.arrow-up
+{
+	border-bottom-color:#469159;
+}
+
+.arrow-down{
+	border-top-color:#469159;
+}
+
+.callbacks_nav {
+	background-color:#469159;
+}
+
+
+.de_tab .de_nav li span {
+border-top: 3px solid #469159;
+}
+
+.feature-box-big-icon i:after {
+border-color: #469159 transparent; /*same colour as the lower of the bubble's gradient*/
+}
+
+.de_review li.active img{
+	border:solid 4px #469159;
+}
+
+
+

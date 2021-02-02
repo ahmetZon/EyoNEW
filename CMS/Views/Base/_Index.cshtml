@@ -1,0 +1,32 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <a href="/Base/FileManager?id=1" class="mymodal btn-bg-success" data-toggle="modal" data-target="#ajaxSub">File manager</a>
+    </div>
+</div> 
+<script>
+    ayarlar();
+</script>
+<div class="row">
+    <div class="col-12">
+        @(Html.Kendo().Grid<UserModel>()
+            .Name("Grid")
+            .Columns(columns => {
+            columns.Bound(o => o.Id).Groupable(false);
+            columns.Bound(o => o.Name);
+            columns.Bound(o => o.Surname);
+            columns.Bound(o => o.UserName);
+            columns.Bound(o => o.BirdhDay);
+            })
+            .Pageable()
+            .Sortable()
+            .Filterable()
+            .Scrollable()
+            .Groupable()
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetPaging", "Base"))
+            .PageSize(15)
+            )
+            ) 
+    </div>
+</div>

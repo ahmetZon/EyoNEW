@@ -1,0 +1,17 @@
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\DynamicSiteService.deps.json
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\DynamicSiteService.runtimeconfig.json
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\DynamicSiteService.runtimeconfig.dev.json
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\DynamicSiteService.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\DynamicSiteService.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\GenericRepoPattern.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\Helpers.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\GenericRepoPattern.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\bin\Release\netcoreapp3.1\Helpers.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.csprojAssemblyReference.cache
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.AssemblyInfoInputs.cache
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.AssemblyInfo.cs
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.csproj.CoreCompileInputs.cache
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.csproj.CopyComplete
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\DynamicSiteService\obj\Release\netcoreapp3.1\DynamicSiteService.genruntimeconfig.cache

@@ -1,0 +1,241 @@
+﻿@{ Layout = null;
+                var DocName = Context.Request.Query["name"].ToStr();
+                var ids = Context.Request.Query["id"].ToStr();
+                var cont = Context.Request.Query["cont"].ToStr(); }
+
+    <script>
+    var DocName = "@DocName";
+    var ids = "@ids";
+    var cont = "@cont";
+    
+</script>
+
+    <script>
+        var DocList = [];
+        function onOpen(el) {
+            console.log(el);
+
+            try {
+                if (DocName == "Documents") {
+
+
+                }
+                else {
+                    $('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
+                    $('#file_link_' + DocName + '').val(el.entry.path);
+                }
+
+            } catch (e) {
+                console.log(e);
+            }
+
+            return;
+        }
+
+
+
+        function onDataBound(e) {
+        }
+
+        function onDrop(e) {
+        }
+
+        function onExecute(e) {
+        }
+
+        function onNavigate(e) {
+        }
+
+
+        function onSelect(e) {
+            DocList = [];
+            $.each(e.entries, function (i, item) {
+                DocList.push(
+                    {
+                        Link: item.path,
+                        Name: item.name,
+                        DocumentId: DocName == "Documents" ? ids : null,
+                        ThumbImageId: DocName == "ThumbImage" ? ids : null,
+                        BannerImageId: DocName == "BannerImage" ? ids : null,
+                        PictureId: DocName == "Picture" ? ids : null,
+
+                    }
+                );
+
+            });
+
+        }
+
+
+
+    </script>
+
+
+<div class="row">
+    <div class="col-12">
+
+        @(Html.Kendo().Window()
+        .Name("window")
+        .Title("Önizleme")
+
+        .Visible(false)
+        .Draggable()
+        .Resizable()
+        .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    )
+        @(Html.Kendo().FileManager().Name("filemanager")
+        .DataSource(ds =>
+        {
+            ds.Read(operation => operation
+            .Type(HttpVerbs.Post)
+            .Action("Read", "FileManagerData")
+        );
+            ds.Destroy(operation => operation
+                .Type(HttpVerbs.Post)
+                .Action("Destroy", "FileManagerData")
+            );
+            ds.Create(operation => operation
+                .Type(HttpVerbs.Post)
+                .Action("Create", "FileManagerData")
+            );
+            ds.Update(operation => operation
+                .Type(HttpVerbs.Post)
+                .Action("Update", "FileManagerData")
+            );
+        })
+        .ContextMenu(context => context.Items(items =>
+        {
+            items.Add("rename");
+            items.Add("delete");
+            items.Add("custom").Name("GetInfo").Text("Detay").Command("MyCustomCommand").SpriteCssClass("k-icon k-i-info");
+            items.Add("download").Name("DownloadCommand").Text("İndir").Command("DownloadCommand").SpriteCssClass("k-icon k-i-download");
+            //items.Add("download");
+        }))
+        .UploadUrl("Upload", "FileManagerData")
+        .Toolbar(tb => tb.Items(items =>
+        {
+            items.Add("createFolder");
+            items.Add("upload");
+            items.Add("sortField");
+            items.Add("changeView");
+            items.Add("spacer");
+            items.Add("details");
+            items.Add("search");
+
+            items.Add("download").Command("DownloadCommand").Text("Download").SpriteCssClass("k-icon k-i-download");
+
+        }))
+        .Draggable(true)
+        .Resizable(true)
+        .Events(events => events
+            .DataBound("onDataBound")
+            .Drop("onDrop")
+            .Execute("onExecute")
+            .Navigate("onNavigate")
+            .Open("onOpen")
+            .Select("onSelect")
+    )
+    )
+
+        <div class="btn btn-light-success font-weight-bolder btn-hover-bg-secondary" style="float: right; margin: 20px;  margin-bottom: 0px;">
+            <a href="#" id="btnFileAdd" class="btn-bg-success">
+                Kaydet
+            </a>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var filemanager = $("#filemanager").getKendoFileManager();
+
+                filemanager.executeCommand({ command: "TogglePaneCommand", options: { type: "preview" } });
+                filemanager.toolbar.fileManagerDetailsToggle.switchInstance.toggle();
+               
+                    $('#btnFileAdd').click(function () {
+                        debugger;
+                        try {
+                            if (DocName == "Documents") {
+                                $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
+                                    alert('Başarıyla yüklendi');
+                                    location.reload();
+                                });
+                            } 
+                            else {
+                                $.ajx('/' + cont + '/SaveMultiDoc', { DocList: DocList, }, function (resultData) {
+                                    console.log(resultData);
+                                    if (resultData.indexOf("Err-") > -1) {
+                                        if (resultData.indexOf("duplicate")) {
+                                            alert("Görsel Adı zaten mevcut.");
+                                        }
+                                        else {
+                                            alert("Hata");
+                                        }
+                                       
+                                    }
+                                    else {
+                                        alert('Başarıyla yüklendi');
+                                        location.reload();
+                                    }
+
+                                    
+                                });
+                              //$('#file_image_' + DocName + '').css('background', "url('/fileupload/UserFiles/Folders/" + el.entry.path + "')");
+                              //$('#file_link_' + DocName + '').val(el.entry.path);
+                            }
+
+                        } catch (e) {
+                            console.log(e);
+
+                        }
+                    });
+
+                })
+        </script>
+
+        <script>
+            var filemanagerNS = kendo.ui.filemanager;
+            function downloadURI(uri, name) {
+                var link = document.createElement("a");
+                // If you don't know the name or want to use
+                // the webserver default set name = ''
+                link.setAttribute('download', name);
+                link.href = uri;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
+
+
+            filemanagerNS.commands.DownloadCommand = filemanagerNS.FileManagerCommand.extend({
+                exec: function () {
+                    var that = this,
+                        filemanager = that.filemanager, // get the kendo.ui.FileManager instance
+                        options = that.options, // get the options passed through the tool
+                        target = options.target // options.target is available only when command is executed from the context menu
+                    selectedFiles = filemanager.getSelected(); // get the selected files
+
+                    downloadURI("../fileupload/UserFiles/Folders/" + selectedFiles[0].path, selectedFiles[0].path.split('/')[selectedFiles[0].path.split('/').length - 1]);
+
+                }
+            });
+
+            filemanagerNS.commands.MyCustomCommand = filemanagerNS.FileManagerCommand.extend({
+                exec: function () {
+                    var that = this,
+                        filemanager = that.filemanager, // get the kendo.ui.FileManager instance
+                        options = that.options, // get the options passed through the tool
+                        target = options.target, // options.target is available only when command is executed from the context menu
+                        selectedFiles = filemanager.getSelected(); // get the selected files
+
+                    var totalSize = 0;
+                    selectedFiles.forEach(function (fileEntry) {
+                        totalSize += fileEntry.size;
+                    });
+
+                    kendo.alert(selectedFiles.length + ' file(s) selected; Total size: ' + kendo.getFileSizeMessage(totalSize))
+                }
+            });
+
+            
+        </script>
+
+    </div>
+</div>

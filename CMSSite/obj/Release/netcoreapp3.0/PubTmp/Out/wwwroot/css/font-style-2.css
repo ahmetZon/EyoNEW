@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700,700i&display=swap');
+
+h1,h2,h3,h4,h5,h6{
+	font-weight:600;
+}
+
+
+h1,h2,h3,h4,h5,h6,
+.big-white,
+.ultra-big-white,
+.de_tab.tab_steps .de_nav li span,
+.teaser-text,
+.text-slider,
+#mainmenu,
+.btn,
+a.btn,
+.btn-line,
+a.btn-line,
+#filters,
+.ultra-big-white,
+.wm{
+font-family: 'Poppins',Arial, Helvetica, sans-serif;
+}
+
+
+h1,h2,h3,h4,h5,h6,
+.de_tab.tab_steps .de_nav li span
+{
+letter-spacing:0;
+text-transform:none;
+}
+
+#subheader h1{
+	letter-spacing:0;
+	text-transform:none;
+}
+
+.blog-list h3, .blog-read h3{
+font-size:22px;
+}
+
+.big-white{
+	font-size:13px;
+}
+
+.ultra-big-white{
+	letter-spacing:0;
+	text-transform:none;
+	font-weight:600;
+	font-size:72px;
+}
+
+.text-slider{
+font-size:60px;
+letter-spacing:5px;
+}
+
+.big-custom-1{
+	font-family:"Poppins";
+	font-size:60px;
+	letter-spacing:0;
+	font-weight:bold;
+	line-height:1.1em;
+	letter-spacing:-1px;
+}
+
+.small-white{
+	font-size:18px;
+	font-weight:400;
+}

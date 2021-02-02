@@ -1,0 +1,78 @@
+﻿@{
+    var PageType = "SpecAttr";
+    var EnumText = "SpecAttr";
+    var postModel = ViewBag.postModel as SpecAttr;
+    var selecttype = Context.Request.Query["selecttype"].ToInt();
+
+
+
+    var dynamicRow = new DynamicModel()
+    {
+        model = postModel == null ? new SpecAttr() : postModel,
+        controllerName = postModel == null ? new SpecAttr().GetType().Name : postModel.GetType().Name,
+        PageType = PageType,
+        titleName = EnumText + " " + (postModel?.Id > 0 ? "Güncelleme" : "Ekleme"),
+        InsertMethodName = "InsertOrUpdate",
+        labelClass = "col-md-4",
+        inputClass = "col-md-8",
+        colClass = "col-md-6",
+        nonProp = "",
+        orderby = "",
+        addBtn = "<input type='submit' value='" + "Kaydet" + "' " + "class='btn btn-primary btn-shadow-hover font-weight-bold mr-2' />",
+        removeBtn = $"<input dataid='{postModel?.Id}' type='button' value='Sil' class='btnDelete btn btn-danger btn-shadow-hover font-weight-bold mr-2' />",
+        whereCase = "SpecId=" + (int)SpecType.list,
+    };
+}
+
+<!--begin::Content-->
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Page Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(EnumText)</h5>
+            <!--end::Page Title-->
+            <!--begin::Action-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <span class="text-muted font-weight-bold mr-4">Sayfa Bilgisi</span>
+            <a href="#" class="btn btn-light-primary font-weight-bolder btn-sm">@Html.Raw("Yeni Kayıt")</a>
+            <!--end::Action-->
+        </div>
+        <!--end::Info-->
+  
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container-fluid">
+
+        <div class="card card-custom">
+            <div class="card-header card-header-tabs-line nav-tabs-line-3x">
+                <div class="card-toolbar">
+                    <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1">@Html.Raw(EnumText + " " + (postModel?.Id > 0 ? "Güncelleme" : "Ekleme"))</a></li>
+                    </ul>
+                </div>
+                @*<div class="card-title"><h3 class="card-label">Title</h3></div>*@
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
+                        @await Component.InvokeAsync("DynamicInput", dynamicRow)
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+<!--end::Content-->

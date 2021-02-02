@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+<!-- ALL PROJECTS START -->
+<div class="section-full  mobile-page-padding bg-white  p-t80 p-b80">
+
+    <div class="container">
+        <!-- TITLE START -->
+        <div class="section-head">
+            <div class="sx-separator-outer separator-center">
+                <div class="sx-separator bg-white bg-moving bg-repeat-x" style="background-image:url(images/background/cross-line2.png)">
+                    <h3 class="sep-line-one">Our Projects</h3>
+                </div>
+            </div>
+        </div>
+        <!-- TITLE END -->
+  
+        <!-- GALLERY CONTENT START -->
+        <ul class="masonry-outer mfp-gallery work-grid row clearfix list-unstyled m-b0">
+            @foreach (var item in contentPages)
+            {
+                <!-- COLUMNS 1 -->
+                <li class="masonry-item cat-1 col-lg-4 col-md-6 col-sm-12 m-b30">
+                    <div class="sx-box   image-hover-block">
+                        <div class="sx-thum-bx">
+                            <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" alt="@(item.ThumbImage!=null?item.ThumbImage.Alt:"")">
+                        </div>
+                        <div class="sx-info  p-t20 text-white">
+                            <h4 class="sx-tilte"><a href="/@item.Link">@item.Name</a></h4>
+                            <p class="m-b0">@Html.Raw(content.ContentShort)</p>
+                        </div> 
+                    </div>
+                </li>
+            }  
+        </ul>
+        <!-- GALLERY CONTENT END --> 
+      
+    </div>
+</div>
+<!-- WHAT WE DO END -->

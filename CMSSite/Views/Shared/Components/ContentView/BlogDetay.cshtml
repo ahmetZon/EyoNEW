@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contents = ViewBag.contents as List<ContentPage>;  
+    int LanguageID = (int)ViewBag.LanguageID; 
+} 
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+ 
+<div class="section-full p-t80 p-b50 inner-page-padding">
+    <div class="container">
+        <div class="blog-single-space max-w900 ml-auto mr-auto">
+            <!-- BLOG START -->
+            <div class="blog-post blog-detail text-black">
+                <div class="sx-post-media">
+                    <div class="portfolio-item">
+                        <img class="img-responsive" src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(content.Picture!=null?content.ThumbImage.Link:"")" alt="@(content.Picture!=null?content.Picture.Alt:"")">
+                    </div>
+                </div>
+                 
+                <div class="sx-post-title ">
+                    <h3 class="post-title">@content.Description</h3>
+                </div>
+
+                <div class="sx-post-text">
+                    @Html.Raw(content.ContentData)
+                    <div class="row">
+                        @foreach (var item in content.Gallery)
+                        {
+                            <div class="col-md-6">
+                                <div class="sx-box m-b30">
+                                    <div class="sx-media">
+                                        <img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@item.Link" alt="@item.Alt">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                         
+                    </div>
+                </div>
+
+                <div class="autor-post-tag-share p-a30 bg-gray">
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <div class="clearfix single-post-share">
+                                <h5>Yazıyı Paylaşın:</h5>
+                                <div class="widget_social_inks">
+                                    <ul class="social-icons social-md social-square social-dark m-b0">
+                                        <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
+                                        <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-controls p-t30">
+                    <div class="d-flex justify-content-between">
+                        <div class="prev-post"><a href="#">Önceki Yazı</a></div>
+                        <div class="next-post"><a href="#">Sonraki Yazı</a></div>
+                    </div>
+                </div>
+
+            </div>
+ 
+         
+             
+        </div>
+    </div>
+</div>
+<!-- SECTION CONTENT END -->
+        </div>
+<!-- CONTENT END -->

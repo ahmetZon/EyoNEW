@@ -1,0 +1,142 @@
+﻿@model DynamicModel
+
+@{ var postModel = Model.model as ContentPage;
+    var ContentPageId = postModel.Id;
+    var spec = ViewBag.spec as List<Spec>; }
+
+<script>
+    var ContentPageId = "@ContentPageId";
+</script>
+<div formdata="@Model.model.GetType().Name" class="container">
+    <form name="frm_spec" id="frm_spec">
+        @foreach (var item in spec.Where(o => o.IsTanim == true).OrderBy(o => o.OrderNo))
+        {
+            switch (item.SpecType)
+            {
+                case SpecType.tanim:
+                    {
+<div class="row mb-4 mt-4">
+    <div class="col-12">
+        <h1>@item.Name</h1>
+    </div>
+</div> if (item.SpecChilds.Any())
+{
+    <div class="row mt-2 mb-2">
+        @foreach (var item2 in item.SpecChilds)
+        {@*<div class="col-@Html.Raw(item.SpecChilds.Count > 0 ? ( 12 / item.SpecChilds.Count).ToStr()  : "12" )">*@
+                                            <div class="col-2">
+                                                <label>@item2.Name</label>
+                                                @switch (item2.SpecType)
+                                                {
+                                                    case SpecType.check:
+                                                        {
+            <span class="switch">
+                <label>
+                    @if (item2.SpecContentValue?.FirstOrDefault(x => x.ContentPageId == ContentPageId && x.SpecId == item2.Id)?.ContentValue == "true")
+                    {
+    <input checked="checked" ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_check" id="check_@item2.Name" name="check_@item2.Name" type="checkbox"> }
+else
+{
+    <input ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_check" id="check_@item2.Name" name="check_@item2.Name" type="checkbox">}
+                    <span></span>
+                </label>
+            </span> }
+        break;
+    case SpecType.list://drop
+        {
+    <select ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_list" class="form-control form-control-solid form-control-lg" id="list_@item2.Name" name="list_@item2.Name">
+        <option value="">Seçiniz</option>
+        @foreach (var attr in item2.SpecAttrs)
+        {
+            if (item2.SpecContentValue?.FirstOrDefault()?.ContentValue == attr.AttrValue)
+            {
+    <option selected="selected" value="@attr.AttrValue">@attr.AttrValue</option>
+ }
+else
+{
+    <option value="@attr.AttrValue">@attr.AttrValue</option>
+}
+}
+    </select> }
+
+break;
+case SpecType.text:
+{
+    <input ContentPageId="@ContentPageId" SpecId="@item2.Id" dataid="item_text" id="text_@item2.Name" name="text_@item2.Name" value="@Html.Raw(item2.SpecContentValue?.Where(x=>x.ContentPageId==ContentPageId && x.SpecId==item2.Id).FirstOrDefault()?.ContentValue)" class=" form-control form-control-solid form-control-lg" /> }
+break;
+case SpecType.editor:
+{ @(Html.Kendo().Editor()
+                                                          .Name("editor_" + item.Name)
+                                                          .HtmlAttributes(new { ContentPageId = ContentPageId, SpecId = item2.Id, dataid ="item_editor", style = "width: 100%; height:200px", aria_label = "editor" })
+                                                          .Tools(tools => tools
+                                                            .Clear()
+                                                            .Bold().Italic().Underline()
+                                                            .JustifyLeft().JustifyCenter().JustifyRight()
+                                                            .InsertUnorderedList().InsertOrderedList()
+                                                            .Outdent().Indent()
+                                                            .CreateLink().Unlink()
+                                                            .InsertImage()
+                                                            .TableEditing()
+                                                            .FontName()
+                                                            .FontSize()
+                                                            .BackColor()
+                                                          //.FontColor()
+                                                          )
+                                                          .ImageBrowser(imageBrowser =>
+                                                          {
+                                                              imageBrowser.Image("~/fileupload/UserFiles/Folders/{0}");
+                                                              imageBrowser.Read("Read", "FileManagerData");
+                                                              imageBrowser.Create("Create", "FileManagerData");
+                                                              imageBrowser.Destroy("Destroy", "FileManagerData");
+                                                              imageBrowser.Upload("Upload", "FileManagerData");
+                                                              //imageBrowser.Thumbnail("Thumbnail", "FileManagerData");
+                                                          }
+                                                      ).Value(item2.SpecContentValue?.FirstOrDefault()?.ContentValue))}
+break;
+}
+                                            </div>}
+    </div>}
+}
+break;
+
+}
+
+}
+
+        <div class="float-right">
+            @Html.Raw(Model.addBtn)
+        </div>
+    </form>
+
+</div>
+
+<script>
+    $(function () {
+
+
+
+        $("#frm_spec").submit(function (e) {
+            e.preventDefault();
+            var postModel = [];
+
+            var items = $('[dataid="item_check"],[dataid="item_list"],[dataid="item_text"],[dataid="item_editor"]')
+            $.each(items, function (i, item) {
+                postModel.push({
+                    SpecId: $(item).attr('SpecId'),
+                    ContentPageId: $(item).attr('ContentPageId'),
+                    ContentValue: $(item).attr('dataid') == "item_check" ? toStr($(item).is(':checked')) : $(item).val()
+                });
+            });
+
+
+            $.LoadingOverlay("show");
+            $.ajx('/SpecContentValue/InsertOrUpdateBulk',
+                { postModel: postModel }, function (resultData) {
+                    debugger;
+                    try { location.href = "/" + controllerName } catch (ex) { debugger; location.reload(); }
+
+                    $.LoadingOverlay("hide");
+                }, function () { location.reload(); });
+        });
+    });
+</script>

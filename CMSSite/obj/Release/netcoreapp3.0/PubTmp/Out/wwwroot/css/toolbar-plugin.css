@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+.octf_tools_bar {
+	position: absolute;
+	right: -400px;
+	top: 0px;
+	background-color: rgb(255, 255, 255);
+	width: 400px;
+	height: 100%;
+	z-index: 10001;
+	transition: right 0.3s ease 0s;
+} .octf_tools_bar.active{ right: 0px; } 
+	.octf_tools_bar__sidebar-cover{ content: ""; width: 100vw; height: 100vh; position: fixed; left: 0; top: 0; visibility: hidden; opacity: 0; cursor: url(https://livewp.site/wp/md/ewebot/wp-content/plugins/gt3-theme-tools-bar/assets/close.png) 16 16, default; -webkit-transition: all .3s ease; -moz-transition: all .3s ease; transition: all .3s ease; } 
+	.active_tools_bar_sidebar .octf_tools_bar__sidebar-cover { visibility: visible; opacity: 1; background: rgba(0, 0, 0, 0.7); z-index: 10000; }
+.octf_tools_bar .octf_tools_bar__icon_container {
+	position: absolute;
+	top: calc(40% - 88px);
+	left: -45px;
+	display: inline-block;
+	box-shadow: rgba(0, 0, 0, 0.07) -8px 8px 30px;
+}
+	.octf_tools_bar__sidebar{ position: absolute; right: -17px; top: 0; height: 100%; width: 417px; padding: 30px; background: #ffffff; border-left: 1px solid #dcdcdc; color: #111; font-size: 14px; line-height: 1.7; overflow-x: hidden; overflow-y: auto; box-sizing: border-box; }
+.octf_tools_bar a{display:flex}
+.admin-bar .octf_tools_bar__sidebar {
+	top: 32px;
+	height: calc(100% - 32px);
+}
+.octf_tools_bar__icon {
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	position: relative;
+	background-color: #2f323a;
+	color: #ffffff;
+	cursor: pointer;
+	left: 0;
+	white-space: nowrap;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	-ms-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+} 
+	.octf_tools_bar__icon.octf_tools_bar__icon_sale{ background: #f73859; } .octf_tools_bar__icon.octf_tools_bar__icon_side_bar{ background: #384259; }
+		.octf_tools_bar__icon.octf_tools_bar__icon_support {
+			background-color: #222327;
+		} 
+	.octf_tools_bar__icon.octf_tools_bar__icon_docs{ background: #c4edde; } 
+	.octf_tools_bar__icon a, .octf_tools_bar__icon a:hover, .octf_tools_bar__icon a:focus, .octf_tools_bar__icon a:active, .octf_tools_bar__icon a:visited { color: #fff; } 
+	
+	.octf_tools_bar__icon div.octf_tools_bar__icon_src{ display: inline-block; width: 45px; height: 45px; line-height: 53px; /*vertical-align: middle;*/ border-radius: 0 !important; transition: opacity .2s ease; color: inherit; } 
+	.octf_tools_bar__icon div.octf_tools_bar__icon_src svg{ width: 1em; height: 1em; display: inline-block; font-size: 21px; fill: currentColor; } 
+	.octf_tools_bar__icon.octf_tools_bar__icon_side_bar div.octf_tools_bar__icon_src{ background-position: 28px -36px; } 
+	.octf_tools_bar__icon.octf_tools_bar__icon_sale div.octf_tools_bar__icon_src{ background-position: -37px -4px; } 
+	.octf_tools_bar__icon.octf_tools_bar__icon_support div.octf_tools_bar__icon_src{ background-position: -68px -4px; } 
+	.octf_tools_bar__icon.octf_tools_bar__icon_docs div.octf_tools_bar__icon_src{ background-position: -4px 28px; } 
+	.octf_tools_bar__icon_tooltip{ font-family: 'Nunito Sans', Sans-serif; font-size: 11px; width: 130px; height: 45px; font-weight: 400; line-height: 45px; text-align: center; transition: all .2s ease; padding: 0; box-sizing: border-box; background: rgba(0, 0, 0, 0.24); border-radius: 0; display: block; float: right; color: inherit; } 
+	.octf_tools_bar__icon:hover .octf_tools_bar__icon_tooltip{ visibility: visible; opacity: 1; right: 110%; } .octf_tools_bar__icon:hover{ left: -130px; } .octf_toolbar_button__container{ text-align: center; padding-bottom: 40px; } 
+	.octf_toolbar_button__container a{ 
+		font-size: 16px;
+		padding: 10px 20px;
+		line-height: 1.5;
+		background-color: #82b440;
+		-webkit-box-shadow: 0 2px 0 #6f9a37;
+		box-shadow: 0 2px 0 #6f9a37;
+		position: relative;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		display: inline-block;
+		margin: 0;
+		border: none;
+		border-radius: 4px;
+		font-family: 'Nunito Sans', Sans-serif;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+		font-weight: bold;
+		-webkit-transition: all .3s;
+		-o-transition: all .3s;
+		transition: all .3s;
+		width: 100%;		
+	} 
+	.octf_toolbar_button__container a, .octf_toolbar_button__container a:hover, 
+	.octf_toolbar_button__container a:focus, .octf_toolbar_button__container a:active, 
+	.octf_toolbar_button__container a:visited {
+		text-decoration: none;
+		outline: none;
+		color: #fff;
+	}
+	.octf_tools_bar__sidebar_container h2{ text-align: center; font-size: 24px; line-height: 1.5; margin-bottom: 20px; } 
+	.octf_tools_bar__sidebar_container a + a{ margin-top: 25px; display: inline-block; } 
+	.octf_tools_bar__sidebar_container a img{ box-shadow: -8px 8px 30px rgba(0, 0, 0, 0.07); max-width: 100%; } 
+	.octf_tools_bar .svg-preloader { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; left: 0; top: 0; background: white; opacity: 1; visibility: visible; transition: opacity ease-in-out 400ms, visibility ease-in-out 400ms; } 
+	.octf_tools_bar.loaded .svg-preloader { opacity: 0; visibility: hidden; }
+@media only screen and (max-width: 1023px) {
+	.octf_tools_bar {
+		width: 0px;
+		right: 0px;
+		top: 100px;
+	}
+}
+	@media only screen and (max-width: 600px) {
+		.octf_tools_bar {
+			width: 0px;
+			right: 0px;
+			top: 100px;
+		}
+
+		.octf_tools_bar__sidebar {
+			width: 317px;
+		}
+
+		.octf_tools_bar__sidebar_container h2 {
+			font-size: 20px;
+		}
+
+		.octf_toolbar_button__container a {
+			padding: 8px 10px;
+		}
+
+		.octf_tools_bar__icon_tooltip {
+			display: none;
+		}
+
+		.octf_tools_bar__icon:hover {
+			left: 0;
+		}
+	}
+
+	.octf-toolbar_wrapper {
+		margin-bottom: 44px;
+	}
+
+		.octf-toolbar_wrapper .octf-toolbar_container {
+			margin-bottom: 20px;
+		}
+
+	.octf-toolbar_title {
+		margin-bottom: 24px;
+		position: relative;
+		text-align: left;
+	}
+
+	.octf-toolbar_title_wrapper {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: center;
+	}
+
+	.octf-toolbar_title_inner {
+		font-size: 14px;
+		color: #363439;
+		border-radius: 5px;
+		line-height: 28px;
+		display: inline-block;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-family: 'Nunito Sans';
+		box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.15);
+		padding: 0 9px;
+		margin-right: 21px;
+	}
+
+	.octf-toolbar_line {
+		position: relative;
+		display: block;
+		height: 1px;
+		background: #e5e5e5;
+		width: 100%;
+		flex: 1;
+	}
+
+		.octf-toolbar_line:before {
+			content: '';
+			position: absolute;
+			z-index: 1;
+			height: 3px;
+			width: 40px;
+			background: #f73859;
+			border-radius: 1.5px;
+			right: 0;
+			top: 50%;
+			margin-top: -1.5px;
+		}
+
+	.octf-toolbar_content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 6px;
+	}
+
+	.octf-toolbar__title {
+		font-size: 16px;
+		line-height: 1.85;
+		font-weight: bold;
+		color: #363439;
+		font-family: 'Nunito Sans', Sans-serif;
+	}
+
+	.octf-toolbar__cats {
+		font-size: 13px;
+		font-weight: 700;
+		color: #bcbcbc;
+		font-family: 'Nunito Sans', Sans-serif;
+		text-transform: uppercase;
+	}
+
+		.octf-toolbar__cats:before {
+			content: '/';
+			margin-left: 5px;
+			margin-right: 5px;
+			font-size: 16px;
+		}
+
+	.octf-toolbar__price {
+		font-size: 16px;
+		font-weight: 700;
+		color: #f73859;
+		font-family: 'Nunito Sans', Sans-serif;
+	}
+
+		.octf-toolbar__price em {
+			color: #636363;
+			margin-right: 5px;
+			opacity: .5;
+			display: inline-block;
+			text-decoration: line-through;
+		}
+
+	.octf_tools_bar__sidebar_container a img {
+		border-radius: 5px;
+		box-shadow: 5px 4px 16px 0px rgba(0, 0, 0, 0.15);
+		transition: .5s;
+	}
+
+	@media only screen and (max-width: 480px) {
+		.octf_tools_bar__icon_tooltip {
+			display: none;
+		}
+
+		.octf_tools_bar__icon:hover {
+			left: 0;
+		}
+	}
+
+	@media only screen and (max-width: 420px) {
+		.octf_tools_bar {
+			width: 250px;
+			right: -250px;
+		}
+
+		.octf_tools_bar__sidebar {
+			width: 267px;
+		}
+
+		.octf_tools_bar__sidebar_container h2 {
+			font-size: 16px;
+		}
+	}

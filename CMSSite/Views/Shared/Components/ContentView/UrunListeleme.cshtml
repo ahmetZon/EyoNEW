@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "_Layout";
+    var content = ViewBag.content as ContentPage;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    var categories = ViewBag.categories as List<ContentPage>;
+    int LanguageID = (int)ViewBag.LanguageID;
+    // int[] specList = new int[] { 16, 17, 64, 63 };
+    var Specs = ViewBag.Specs as List<Spec>;
+    List<int> specList = Specs.Where(x => x.ParentId == 15).Select(s => s.Id).ToList();
+    var subSpecs = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23) && x.ParentId != null).OrderBy(o => o.ParentId).ToList();
+    List<int> subSpecList = Specs.Where(x => (x.ParentId == 18 || x.ParentId == 23)).Select(s => s.Id).ToList();
+    int parentCheck = 0;
+}
+@await Component.InvokeAsync("MenuView", new { type = "SubHeader" })
+<!-- SECTION CONTENT START -->
+<div class="section-full p-tb80 inner-page-padding">
+    <!-- GALLERY CONTENT START -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 sticky_column">
+                <div class="side-bar p-a30 bg-gray">
+                    <!-- SEARCH -->
+                    <div class="widget">
+                        <h4 class="widget-title ">Arama</h4>
+                        <div class="search-bx p-a10 bg-white">
+                            <form role="search" method="post">
+                                <div class="input-group">
+                                    <input name="news-letter" type="text" class="form-control bg-gray" placeholder="Kelime giriniz">
+                                    <span class="input-group-btn bg-gray">
+                                        <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- FILTERS -->
+                    <div class="widget widget_services ">
+                        <h4 class="widget-title">Filtreler</h4>
+                        @foreach (var item in subSpecs)
+                        {
+                            if (item.ParentId != parentCheck)
+                            {
+                                <h5 class="widget-title">@item.Parent.Name</h5>
+                            }
+                            <p> <input type="checkbox" name="chk_@item.Id" value="@item.Id" class="filterSpecs" checked="checked" /> &nbsp;@item.Name</p>
+
+                            parentCheck = item.ParentId ?? 0;
+                        }
+
+                    </div>
+                    <!-- Categories  -->
+                    <div class="widget widget_services ">
+                        <h4 class="widget-title">Kategoriler</h4>
+                        <ul class="p-a10 bg-white">
+                            @foreach (var item in categories)
+                            {
+                                <li><a href="/@item.Link">@item.Name<span></span></a></li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- SIDE BAR END -->
+
+
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <div class="news-listing">
+
+                    @foreach (var item in contentPages)
+                    {
+
+                        <div class="blog-post blog-lg date-style-3 block-shadow @( String.Join(" ", item.SpecContentValue.Where(x => x.ContentPageId == item.Id && subSpecList.Contains(x.SpecId)).Select(s=>s.SpecId).ToArray())  )">
+
+
+                            <div class="sx-post-info  bg-white">
+                                <div class="sx-post-meta ">
+                                    <h4 class="post-title pt-3">@Html.Raw(item.Name)</h4>
+                                </div>
+                                @*<div class="sx-post-title ">
+                                    </div>*@
+                                <div class="sx-post-text">
+                                    <div class="row">
+                                        <div class="col-md-4"><img src="http://interalcms.zonagency.com/fileupload/UserFiles/Folders/@(item.ThumbImage!=null?item.ThumbImage.Link:"")" style="width:100%;" /></div>
+                                        <div class="col-md-8">
+                                            @foreach (var specItem in item.SpecContentValue.Where(x => x.ContentPageId == item.Id && specList.Contains(x.SpecId)).ToList())
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-6"><b>@Specs.FirstOrDefault(x => x.Id == specItem.SpecId).Name</b></div>
+                                                    <div class="col-md-6">@specItem.ContentValue</div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="sx-post-readmore pull-left">
+                                        <a href="/@item.Link" title="Devamını okumak için tıklayınız" rel="bookmark" class="site-button-link">Devamı</a>
+                                    </div>
+                                    <div class="widget_social_inks pull-right">
+                                        <ul class="social-icons social-square social-dark m-b0">
+                                            <li><a href="javascript:void(0);" class="fa fa-facebook"></a></li>
+                                            <li><a href="javascript:void(0);" class="fa fa-twitter"></a></li>
+                                            <li><a href="javascript:void(0);" class="fa fa-rss"></a></li>
+                                            <li><a href="javascript:void(0);" class="fa fa-youtube"></a></li>
+                                            <li><a href="javascript:void(0);" class="fa fa-instagram"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var sections = $('.blog-post');
+    function updateFilter() {
+        var checked = $(".filterSpecs:checked");
+        if (checked.length) {
+            sections.hide();
+            checked.each(function () {
+                $("." + $(this).val()).show();
+            });
+        } else {
+            sections.show();
+        }
+    }
+    $(".filterSpecs").click(updateFilter);
+</script>

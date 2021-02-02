@@ -1,0 +1,16 @@
+/* load  color css 
+------------------------------
+select one of below: 
+aqua.css
+blue.css
+green.css
+grey.css
+red.css
+orange.css
+pink.css
+purple.css
+yellow.css
+lime.css
+*/
+
+@import url("colors/yellow.css");

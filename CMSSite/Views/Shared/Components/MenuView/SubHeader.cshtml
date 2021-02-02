@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+    var contentPages = ViewBag.contentPages as List<ContentPage>;
+    var content = ViewBag.content as ContentPage;
+    ContentPage tempContent = new ContentPage();
+    List<ContentPage> tempContentList = new List<ContentPage>();
+    var bannerImage = "default-header.jpg";
+    int LanguageID = (int)ViewBag.LanguageID;
+    tempContent = content;
+    while (tempContent.ContentPageId != null)
+    {
+        tempContent = contentPages.Where(x => x.Id == tempContent.ContentPageId).FirstOrDefault();
+        tempContentList.Add(tempContent);
+        if ((bannerImage == "default-header.jpg" || string.IsNullOrEmpty(bannerImage)) && tempContent.BannerImage != null)
+            bannerImage = tempContent.BannerImage.Link;
+
+    }
+}
+ 
+    <!-- INNER PAGE BANNER -->
+    <div class="sx-bnr-inr overlay-wraper bg-parallax bg-top-center" data-stellar-background-ratio="0.5" style="background-image:url('https://cms.cuhadaroglu.com/uploads/@(content.BannerImage==null?bannerImage:content.BannerImage.Link)')">
+        <div class="overlay-main bg-black opacity-07"></div>
+        <div class="container">
+            <div class="sx-bnr-inr-entry">
+                <div class="banner-title-outer">
+                    <div class="banner-title-name">
+                        <h2 class="m-tb0">@content.Name</h2>
+                        <p>@Html.Raw(content.ContentShort)</p>
+                    </div>
+                </div>
+                <!-- BREADCRUMB ROW -->
+                <div>
+                    <ul class="sx-breadcrumb breadcrumb-style-2">
+                        <li><a href="/">@(LanguageID==1? "Anasayfa" : "Home")</a></li> 
+                        @foreach (var item in Enumerable.Reverse(tempContentList))
+                        {
+                            <li><a @(item.IsClick == false ? "href=javascript:void(0)" : "href=" + item.Link)>@item.Name</a></li>
+                        }
+                        <li>@content.Name</li>
+                    </ul>
+                  
+                </div>
+                <!-- BREADCRUMB ROW END -->
+            </div>
+        </div>
+    </div>

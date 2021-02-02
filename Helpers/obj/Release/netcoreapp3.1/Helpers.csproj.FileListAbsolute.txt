@@ -1,0 +1,9 @@
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\bin\Release\netcoreapp3.1\Helpers.deps.json
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\bin\Release\netcoreapp3.1\Helpers.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\bin\Release\netcoreapp3.1\Helpers.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.AssemblyInfoInputs.cache
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.AssemblyInfo.cs
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.csproj.CoreCompileInputs.cache
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.dll
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.pdb
+E:\projeler\bitbucketRepos\CuhadarogluInteral\Helpers\obj\Release\netcoreapp3.1\Helpers.csprojAssemblyReference.cache

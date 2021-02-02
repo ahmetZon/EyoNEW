@@ -1,0 +1,81 @@
+﻿@{
+    var pageName = "SpecAttr";
+}
+<!--begin::Content-->
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+    <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center flex-wrap mr-2">
+            <!--begin::Page Title-->
+            <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw("SpecAttr")</h5>
+            <!--end::Page Title-->
+            <!--begin::Action-->
+            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+            <span class="text-muted font-weight-bold mr-4">Sayfa Bilgisi</span>
+            <a href="/@Html.Raw(pageName)/InsertOrUpdatePage" class="btn btn-light-primary font-weight-bolder btn-sm">Yeni Kayıt</a>
+            <!--end::Action-->
+        </div>
+        <!--end::Info-->
+ 
+    </div>
+</div>
+<!--end::Subheader-->
+<!--begin::Entry-->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                @(Html.Kendo().Grid<SpecAttr>().Name("grid_"+ pageName)
+                .Columns(columns => {
+                    columns.Bound(o => o.Id).Groupable(false);
+                    columns.Bound(p => p.Spec.Name).Title("Spec Ad");
+                    //columns.Bound(p => p.Spec.SpecType).Title("Spec Tipi");
+                    columns.Bound(o => o.AttrValue).Title("Value");
+
+                    columns.Bound(p => p.Id)
+                    .Sortable(false)
+                    .Title("Detay")
+                    .ClientTemplate("<a class='btn btn-sm btn-clean btn-icon btn-icon-md' href='/"+pageName+"/InsertOrUpdatePage?id=#=Id#' title='Detay'><i class='la la-edit'></i></a>");
+                })
+            .Pageable()
+            .Sortable()
+            .Filterable()
+            .Scrollable()
+            .Resizable(r => r.Columns(true))
+            .Reorderable(r => r.Columns(true))
+            .DataSource(dataSource =>
+            dataSource
+            .Ajax().Events(events => events.Error("error_handler"))
+            .Read(read => read.Action("GetPaging", pageName))
+            .PageSize(15)
+            )
+            )
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Entry-->
+<!--end::Content-->
+
+<script>
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+</script>

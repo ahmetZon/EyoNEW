@@ -1,0 +1,307 @@
+﻿@model DynamicModel
+
+@try
+{
+    Type t = Model.model.GetType();
+    Model.controllerName = string.IsNullOrEmpty(Model.controllerName) ? t.Name : Model.controllerName;
+
+    var formname = "frm_" + t.Name;
+
+    var props = t.GetProperties().ToList();
+
+    var baseType = new BaseModel().GetType().GetProperties().Where(o => o.Name != "ModDate" && o.Name != "CreaDate").ToList();
+    props = props.AsQueryable().Where(d => d.Name != "ModDate" && d.Name != "CreaDate" && !Helpers.GetPropertyAttributes(d).Keys.Any(oo => oo == "NotMapped")).ToList();
+
+    var IdValue = Model.model.GetPropValue("Id");
+    var idval = IdValue.ToInt();
+
+    <script type="text/javascript">
+        var TName = "@t.Name";
+        var formname = "@formname";
+        var IdValue = "@IdValue";
+        var idval = "@idval";
+        var controllerName = "@Model.controllerName";
+        var InsertMethodName = "@Model.InsertMethodName";
+    </script>
+
+    <div formdata="@Model.model.GetType().Name" class="container">
+        <form name="@formname" id="frm_@t.Name">
+            <div class="form-group row">
+                @foreach (var prp in baseType)
+                {
+                    props = props.AsQueryable().Where(d => d.Name != prp.Name).ToList();
+                }
+
+                @if (!string.IsNullOrEmpty(Model.nonProp))
+                    Model.nonProp.Split(",").ToList().ForEach(o =>
+                    {
+                        props = props.AsQueryable().Where(d => d.Name != o.Trim()).ToList();
+                    });
+
+                @{var orderbyProps = props.AsQueryable().OrderBy(oo => "" == "");
+                }
+
+                @if (!string.IsNullOrEmpty(Model.orderby))
+                    Model.orderby.Split(",").ToList().ForEach(o =>
+                    {
+                        if (!string.IsNullOrEmpty(o))
+                            props = orderbyProps.OrderBy(oo => oo.Name == o.Trim()).ThenBy(oo => oo.Name == o.Trim()).ToList();
+                    });
+
+
+                @foreach (var prp in props)
+                {
+                    var prpName = prp.Name;
+                    try
+                    {
+                        object value = null;
+                        switch (Type.GetTypeCode(prp.PropertyType))
+                        {
+                            case TypeCode.Object:
+                                {
+                                    value = Model.model.GetPropValue(prp.Name);
+                                    break;
+                                }
+                        }
+
+
+                        var dName = Helpers.GetPropertyAttributes(prp);
+
+                        var DisplayName = "";
+                        if (dName.Count > 0 && dName.Any(o => o.Key == "DisplayName"))
+                            DisplayName = dName.FirstOrDefault(o => o.Key == "DisplayName").Value.ToStr();
+                        else
+                            DisplayName = prp.Name;
+
+
+                        var placeholder = "";
+                        placeholder = DisplayName;
+
+                        var Required = "";
+                        var strReq = "";
+                        if (dName.Count > 0 && dName.Any(o => o.Key == "Required"))
+                        {
+                            Required = dName.FirstOrDefault(o => o.Key == "Required").Value.ToStr();
+                            strReq = " <span style='color:red;' class='required'> * </span>";
+                            DisplayName += strReq;
+                        }
+
+
+                        switch (Type.GetTypeCode(prp.PropertyType))
+                        {
+                            case TypeCode.Object:
+                                {
+                                    if (prpName == "Gallery" || prpName == "Documents")
+                                    {
+
+                                        <div class="card card-custom gutter-b example example-compact col-md-12">
+
+                                            <div class="subheader py-2 py-lg-6 subheader-transparent" id="kt_subheader">
+                                                <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                                                    <!--begin::Info-->
+                                                    <div class="d-flex align-items-center flex-wrap mr-2">
+                                                        <!--begin::Page Title-->
+                                                        <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">@Html.Raw(DisplayName == "Galeri" ? "Galeri" : "Döküman")</h5>
+                                                        <!--end::Page Title-->
+                                                        <!--begin::Action-->
+                                                        <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
+                                                        @if (idval > 0)
+                                                        {
+                                                    <a href="/FileManagerData/FileManager?id=@idval&name=@prpName&cont=@Model.controllerName" class="mymodal btn-bg-success">
+                                                        Yeni Ekle
+                                                    </a>
+                                                        }
+                                                        <!--end::Action-->
+                                                    </div>
+                                                    <!--end::Info-->
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-md-12">
+
+                                                        @(Html.Kendo().Grid<Documents>()
+                                                        .Name("Grid_"+prpName)
+                                                        .Columns(columns => {
+                                                            columns.Bound(o => o.Id).Groupable(false);
+                                                            columns.Bound(o => o.Name);
+                                                            columns.Bound(o => o.Alt);
+                                                            columns.Bound(o => o.Title);
+                                                            columns.Bound(o => o.OrderNo);
+                                                            columns.Bound(o => o.CreaDate);
+                                                            columns.Command(command => command.Destroy()).Width(120).Title("İşlemler");
+                                                        })
+                                                        .Pageable()
+                                                        .Sortable()
+                                                        .Filterable()
+                                                        .Scrollable()
+                                                        .DataSource(dataSource =>dataSource.Ajax()
+                                                        .Read(read => read.Action("Get" +prpName , "ContentPage", new {id= idval }))
+                                                        .PageSize(15)
+                                                        .Destroy("delete"+prpName, "ContentPage")
+                                                        .Events(events => events.Error("error_handler"))
+                                                        ))
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                    else if (prpName == "BannerImage" || prpName == "Picture" || prpName == "ThumbImage")
+                                    {
+                                        var doc = value as Documents;
+                                        var imageLink = "http://interalcms.zonagency.com/fileupload/UserFiles/Folders/" + (doc==null? "/assets/media/users/blank.png":doc.Link);
+                                        <!--begin::Card-->
+                                        <div class="card card-custom gutter-b example example-compact col-md-4">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h3 class="card-label">@Html.Raw(DisplayName)</h3>
+                                                </div>
+                                            </div>
+
+                                            <style>
+                                                .containCustom {
+                                                    background-size: cover !important;
+                                                    background-repeat: no-repeat !important;
+                                                }
+                                            </style>
+                                            <!--begin::Form-->
+                                            <div class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                      
+                                                        <div style="background-image: url(@imageLink)" class="image-input image-input-outline">
+                                                            <div class="containCustom image-input-wrapper" name="file_image_@prp.Name" id="file_image_@prp.Name"></div>
+                                                            <a href="/FileManagerData/FileManager?id=@idval&name=@prpName&cont=@Model.controllerName" class="mymodal btn-bg-success">
+                                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change"
+                                                                       data-toggle="tooltip" title="" data-original-title="@Html.Raw(DisplayName) Ekle/Güncelle">
+                                                                    <i class="fa fa-pen icon-sm text-muted"></i>
+                                                                </label>
+                                                            </a>
+                                                            @*<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>*@
+                                                            @if (idval > 0)
+                                                            {
+                                                                <span dataid="@doc?.Id" class="btnImageDelete_@prp.Name btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="@Html.Raw(DisplayName) Sil">
+                                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                                                </span>
+                                                            }
+                                                        </div>
+
+                                                        <span class="form-text text-muted">Yüklenebilir resim tipleri: png, jpg, jpeg, gif.</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <form id="form_@prp.Name" name="form_@prp.Name">
+                                                            <input type="hidden" id="file_id_@prp.Name" name="file_id_@prp.Name" value="@doc?.Id" />
+                                                            <input name="file_link_@prp.Name" id="file_link_@prp.Name" value="@doc?.Link" class="form-control form-control-solid form-control-sm" type="hidden" />
+
+                                                            @if (prp.Name == "BannerImageId")
+                                                            {
+                                                                <input type="hidden" id="file_BannerImageId_@prp.Name" name="file_id_@prp.Name" value="@doc?.BannerImageId" />
+                                                            }
+                                                            @if (prp.Name == "DocumentId")
+                                                            {
+                                                                <input type="hidden" id="file_DocumentId_@prp.Name" name="file_id_@prp.Name" value="@doc?.DocumentId" />
+                                                            }
+                                                            @if (prp.Name == "PictureId")
+                                                            {
+                                                                <input type="hidden" id="file_PictureId_@prp.Name" name="file_id_@prp.Name" value="@doc?.PictureId" />
+                                                            }
+                                                            @if (prp.Name == "ThumbImageId")
+                                                            {
+                                                                <input type="hidden" id="file_ThumbImageId_@prp.Name" name="file_id_@prp.Name" value="@doc?.ThumbImageId" />
+                                                            }
+
+
+                                                            Adı<input name="file_name_@prp.Name" id="file_name_@prp.Name" value="@doc?.Name" class="form-control form-control-solid form-control-sm" type="text" />
+                                                            <br />
+                                                            Başlık Bilgisi<input name="file_title_@prp.Name" id="file_title_@prp.Name" value="@doc?.Title" class="form-control form-control-solid form-control-sm" type="text" />
+                                                            <br />
+                                                            Alt Bilgisi<input name="file_alt_@prp.Name" id="file_alt_@prp.Name" value="@doc?.Alt" class="form-control form-control-solid form-control-sm" type="text" />
+                                                            <br />
+                                                            @Html.Raw(Model.addBtn)
+                                                        </form>
+                                                        <script type="text/javascript">
+                                                            $(function () {
+                                                                $("#form_" + "@prp.Name").submit(function (e) {
+                                                                    e.preventDefault();
+                                                                    var postModel = $.fn.toForm("#form_" + "@prp.Name" + "'");
+                                                                    debugger;
+                                                                    $.ajx('/ContentPage/SaveSingleImage', { postModel: postModel }, function (resultData) {
+                                                                        debugger;
+
+                                                                    });
+                                                                });
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                                <!--begin::Code-->
+                                                <!--end::Code-->
+                                            </div>
+                                        </div>
+                                        <!--end::Card-->
+                                        <!--begin::Card-->
+                                    }
+
+                                    break;
+                                }
+
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+            </div>
+            @*<div class="float-right">
+                    @Html.Raw(Model.addBtn)
+                </div>*@
+        </form>
+    </div>
+    <script>
+        $(function () {
+
+
+        });
+    </script>
+}
+catch (Exception ex)
+{
+    throw ex;
+}
+
+
+
+
+<script>
+    ayarlar();
+</script>
+
+<script>
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+    function showDetails(e) {
+        e.preventDefault();
+        debugger;
+        //location.href = '/InsertOrUpdatePage?id=' + e
+    }
+</script>
+
